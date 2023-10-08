@@ -6,14 +6,12 @@
 
 typedef char string[100];
 
-typedef struct
-{
+typedef struct{
 	string nama;
 	float berat;
 }Barang;
 
-typedef struct
-{
+typedef struct{
 	string nama, telp, tanggal;
 	int noRek, PIN;
 	double saldo;
@@ -44,8 +42,7 @@ int main(int argc, char *argv[]) {
 	
 	initData(N);
 	
-	do
-	{
+	do{
 		system("cls");
 		printf("\n\t\t ===[ BANK CENTRAL ATMA ]===");
 		printf("\n\t [1] Buka Rekening");
@@ -62,102 +59,73 @@ int main(int argc, char *argv[]) {
 		printf("\n\n\t >>> "); scanf("%d", &menu);
 		
 		system("cls");
-		switch(menu)
-		{
+		switch(menu){
 			case 1:
-				if(cekKosong(N) != -1)
-				{
+				if(cekKosong(N) != -1){
 					indeks = cekKosong(N);
 					printf("\n\t\t Nasabah ke %d \n", indeks+1);
-					do
-					{
+					do{
 						printf("\n\t Masukan Nama Nasabah \t\t: "); fflush(stdin); gets(N[indeks].nama);
-						if(strlen(N[indeks].nama) == 0 || strcmp(N[indeks].nama, "-") == 0)
-						{
+						if(strlen(N[indeks].nama) == 0 || strcmp(N[indeks].nama, "-") == 0){
 							printf("\n\t\t [!] Nama Tidak Boleh Kosong \n");
-						}
-						else
-						{
+						}else{
 							break;
 						}
 					}while(true);
 					
-					do
-					{
+					do{
 						printf("\n\t Masukkan Nomor Telepon Nasabah : "); fflush(stdin); gets(noTelp);
-						if(strlen(noTelp) < 10 || strlen(noTelp) > 13)
-						{
+						if(strlen(noTelp) < 10 || strlen(noTelp) > 13){
 							printf("\n\t\t [!] Nomor Telepon Harus 10-13 Digit \n");
-						}
-						else if(cariTelepon (N, noTelp) != -1)
-						{
+						}else if(cariTelepon (N, noTelp) != -1){
 							printf("\n\t\t [!] Nomor Telepon sudah pernah diinput sebelumnya");
-						}
-						else
-						{
+						}else{
 							strcpy(N[indeks].telp, noTelp);
 						}
 					}while(strcmp(N[indeks].telp, "-") == 0);
 					
-					do
-					{
+					do{
 						printf("\n\t Masukkan Tanggal Lahir Nasabah : "); fflush(stdin); gets(N[indeks].tanggal);
-						if(strlen(N[indeks].tanggal) == 0 || strcmp(N[indeks].tanggal, "-") == 0)
-						{
+						if(strlen(N[indeks].tanggal) == 0 || strcmp(N[indeks].tanggal, "-") == 0){
 							printf("\n\t\t [!] Tanggal Lahir Tidak Boleh Kosong \n");
-						}
-						else
-						{
+						}else{
 							break;
 						}
 					}while(true);
 					
-					do
-					{
+					do{
 						noRek = angkaRandom (9999, 1000);
 					}while(cariRekening (N, noRek) != -1);
 					N[indeks].noRek = noRek;
 					printf("\n\t No. Rekening Anda \t\t: %d", N[indeks].noRek); 
 					
-					do
-					{
+					do{
 						printf("\n\t Masukkan PIN \t\t\t: "); scanf("%d", &N[indeks].PIN);
-						if(N[indeks].PIN < 1000 || N[indeks].PIN > 9999)
-						{
+						if(N[indeks].PIN < 1000 || N[indeks].PIN > 9999){
 							printf("\n\t\t [!] PIN harus 4 digit \n");
-						}
-						else
-						{
+						}else{
 							break;
 						}
 					}while(true);
 					
-					do
-					{
+					do{
 						printf("\n\t Masukkan Saldo \t\t: "); scanf("%lf", &N[indeks].saldo);
-						if(N[indeks].saldo < 100000)
-						{
+						if(N[indeks].saldo < 100000){
 							printf("\n\t\t [!] Minimal Input Saldo Rp 100.000");
-						}
-						else
-						{
+						}else{
 							break;
 						}
 					}while(true);
 					
 					printf("\n\t\t [!] Input Berhasil [!]");
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Penuh");
 				}
 			break;
 			
 			case 2:
-				if(cekKosong(N) != 0)
-				{
-					do
-					{
+				if(cekKosong(N) != 0){
+					do{
 						system("cls");
 						printf("\n\t ===[ Tampil Rekening ]===");
 						printf("\n\t [1] Seluruh");
@@ -166,21 +134,17 @@ int main(int argc, char *argv[]) {
 						printf("\n\t [0] Main Menu");
 						printf("\n\n\t >>> "); scanf("%d", &subMenu);
 						
-						switch(subMenu)
-						{
+						switch(subMenu){
 							case 1:
 								tampilData(N);
 							break;
 							
 							case 2:
 								printf("\n\t Masukan Nomor Rekening : "); scanf("%d", &noRek);
-								if(cariRekening (N, noRek) != -1)
-								{
+								if(cariRekening (N, noRek) != -1){
 									indeks = cariRekening (N, noRek);
 									tampilDataSearch (N, indeks);
-								}
-								else
-								{
+								}else{
 									printf("\n\t\t [!] Data Tidak Ditemukan");
 								}
 							break;
@@ -194,278 +158,190 @@ int main(int argc, char *argv[]) {
 							break;
 						}getch();
 					}while(subMenu != 0);
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Kosong");
 				}
 			break;
 			
 			case 3:
-				if(cekKosong(N) != 0)
-				{
+				if(cekKosong(N) != 0){
 					printf("\n\t Masukan Nomor Rekening : "); scanf("%d", &noRek);
 					printf("\n\t Masukan PIN : "); scanf("%d", &pin);
-					if(cariRekening (N, noRek) != -1)
-					{
+					if(cariRekening (N, noRek) != -1){
 						indeks = cariRekening (N, noRek);
-						if(N[indeks].PIN != pin)
-						{
+						if(N[indeks].PIN != pin){
 							printf("\n\t\t [!] No. Rekening atau Pin Salah");
-						}
-						else
-						{
-							do
-							{
+						}else{
+							do{
 								printf("\n\t Masukan Nama Nasabah \t\t: "); fflush(stdin); gets(N[indeks].nama);
-								if(strlen(N[indeks].nama) == 0 || strcmp(N[indeks].nama, "-") == 0)
-								{
+								if(strlen(N[indeks].nama) == 0 || strcmp(N[indeks].nama, "-") == 0){
 									printf("\n\t\t [!] Nama Tidak Boleh Kosong \n");
-								}
-								else
-								{
+								}else{
 									break;
 								}
 							}while(true);
 							
-							do
-							{
+							do{
 								printf("\n\t Masukkan Nomor Telepon Nasabah : "); fflush(stdin); gets(noTelp);
-								if(strlen(noTelp) < 10 || strlen(noTelp) > 13)
-								{
+								if(strlen(noTelp) < 10 || strlen(noTelp) > 13){
 									printf("\n\t\t [!] Nomor Telepon Harus 10-13 Digit \n");
-								}
-								else if(cariTelepon (N, noTelp) != -1)
-								{
+								}else if(cariTelepon (N, noTelp) != -1){
 									printf("\n\t\t [!] Nomor Telepon sudah pernah diinput sebelumnya");
-								}
-								else
-								{
+								}else{
 									strcpy(N[indeks].telp, noTelp);
 								}
 							}while(strcmp(N[indeks].telp, "-") == 0);
 							
-							do
-							{
+							do{
 								printf("\n\t Masukkan Tanggal Lahir Nasabah : "); fflush(stdin); gets(N[indeks].tanggal);
-								if(strlen(N[indeks].tanggal) == 0 || strcmp(N[indeks].tanggal, "-") == 0)
-								{
+								if(strlen(N[indeks].tanggal) == 0 || strcmp(N[indeks].tanggal, "-") == 0){
 									printf("\n\t\t [!] Tanggal Lahir Tidak Boleh Kosong \n");
-								}
-								else
-								{
+								}else{
 									break;
 								}
 							}while(true);
 							
 							printf("\n\t No. Rekening Anda \t\t: %d", N[indeks].noRek); 
 							
-							do
-							{
+							do{
 								printf("\n\t Masukkan PIN \t\t\t: "); scanf("%d", &N[indeks].PIN);
-								if(N[indeks].PIN < 1000 || N[indeks].PIN > 9999)
-								{
+								if(N[indeks].PIN < 1000 || N[indeks].PIN > 9999){
 									printf("\n\t\t [!] PIN harus 4 digit \n");
-								}
-								else
-								{
+								}else{
 									break;
 								}
 							}while(true);
 							
-							do
-							{
+							do{
 								printf("\n\t Masukkan Saldo \t\t: "); scanf("%lf", &N[indeks].saldo);
-								if(N[indeks].saldo < 100000)
-								{
+								if(N[indeks].saldo < 100000){
 									printf("\n\t\t [!] Minimal Input Saldo Rp 100.000");
-								}
-								else
-								{
+								}else{
 									break;
 								}
 							}while(true);
 							
-							printf("\n\t\t [!] Update Data Berhasil")
+							printf("\n\t\t [!] Update Data Berhasil");
 						}
-					}
-					else
-					{
+					}else{
 						printf("\n\t\t [!] No. Rekening atau Pin Salah");
 					}
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Kosong");
 				}
 			break;
 			
 			case 4:
-				if(cekKosong(N) != 0)
-				{
+				if(cekKosong(N) != 0){
 					printf("\n\t Masukan Nomor Rekening : "); scanf("%d", &noRek);
 					printf("\n\t Masukan PIN : "); scanf("%d", &pin);
-					if(cariRekening (N, noRek) != -1)
-					{
+					if(cariRekening (N, noRek) != -1){
 						indeks = cariRekening (N, noRek);
-						if(N[indeks].PIN != pin)
-						{
+						if(N[indeks].PIN != pin){
 							printf("\n\t\t [!] No. Rekening atau Pin Salah");
-						}
-						else
-						{
+						}else{
 							hapusRekening (N, indeks);
 							printf("\n\t\t [!] Berhasil Menghapus Data Nasabah");
 						}	
-					}
-					else
-					{
+					}else{
 						printf("\n\t\t [!] No. Rekening atau Pin Salah");
 					}
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Kosong");
 				}
 			break;
 			
 			case 5:
-				if(cekKosong(N) != 0)
-				{
+				if(cekKosong(N) != 0){
 					printf("\n\t Masukan Nomor Rekening : "); scanf("%d", &noRek);
 					printf("\n\t Masukan PIN : "); scanf("%d", &pin);
-					if(cariRekening (N, noRek) != -1)
-					{
+					if(cariRekening (N, noRek) != -1){
 						indeks = cariRekening (N, noRek);
-						if(N[indeks].PIN != pin)
-						{
+						if(N[indeks].PIN != pin){
 							printf("\n\t\t [!] No. Rekening atau Pin Salah");
-						}
-						else
-						{
-							if(cekKosongBarang (N, indeks) != -1)
-							{
+						}else{
+							if(cekKosongBarang (N, indeks) != -1){
 								subIndeks = cekKosongBarang (N, indeks);
 								printf("\n\t\t Barang ke %d", subIndeks+1);
-								do
-								{
+								do{
 									printf("\n\t Masukkan Nama Barang \t: "); fflush(stdin); gets(N[indeks].B[subIndeks].nama);
-									if(strlen(N[indeks].B[subIndeks].nama) == 0 || strcmp(N[indeks].B[subIndeks].nama, "-") == 0)
-									{
+									if(strlen(N[indeks].B[subIndeks].nama) == 0 || strcmp(N[indeks].B[subIndeks].nama, "-") == 0){
 										printf("\n\t\t Nama Tidak Boleh Kosong");
-									}
-									else
-									{
+									}else{
 										break;
 									}
 								}while(true);
 								
-								do
-								{
+								do{
 									printf("\n\t Masukkan Berat Barang \t: "); scanf("%f", &N[indeks].B[subIndeks].berat);
-									if(N[indeks].B[subIndeks].berat <= 0)
-									{
+									if(N[indeks].B[subIndeks].berat <= 0){
 										printf("\n\t\t Berat Tidak Boleh <= 0");
-									}
-									else
-									{
+									}else{
 										break;
 									}
 								}while(true);
 								
 								printf("\n\t\t [!] Input Berhasil");
-							}
-							else
-							{
+							}else{
 								printf("\n\t\t [!] Data Penuh");
 							}
 						}	
-					}
-					else
-					{
+					}else{
 						printf("\n\t\t [!] No. Rekening atau Pin Salah");
 					}
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Kosong");
 				}
 			break;
 			
 			case 6:
-				if(cekKosong(N) != 0)
-				{
+				if(cekKosong(N) != 0){
 					printf("\n\t Masukan Nomor Rekening : "); scanf("%d", &noRek);
 					printf("\n\t Masukan PIN : "); scanf("%d", &pin);
-					if(cariRekening (N, noRek) != -1)
-					{
+					if(cariRekening (N, noRek) != -1){
 						indeks = cariRekening (N, noRek);
-						if(N[indeks].PIN != pin)
-						{
+						if(N[indeks].PIN != pin){
 							printf("\n\t\t [!] No. Rekening atau Pin Salah");
-						}
-						else
-						{
-							if(cekKosongBarang (N, indeks) != 0)
-							{
+						}else{
+							if(cekKosongBarang (N, indeks) != 0){
 								tampilDataSearch (N, indeks);
 								printf("\n\n\t Masukkan Nama Barang : "); fflush(stdin); gets(barang);
-								if(cariBarang (N, indeks, barang) != -1)
-								{
+								if(cariBarang (N, indeks, barang) != -1){
 									subIndeks = cariBarang (N, indeks, barang);
 									hapusBarang (N, indeks, subIndeks);
 									printf("\n\t\t [!] Berhasil Mengambil Barang");
-								}
-								else
-								{
+								}else{
 									printf("\n\t\t [!] Data tidak ditemukan");
 								}
-							}
-							else
-							{
+							}else{
 								printf("\n\t\t [!] Data Kosong");
 							}
 						}
-					}
-					else
-					{
+					}else{
 						printf("\n\t\t [!] No. Rekening atau Pin Salah");
 					}
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Kosong");
 				}
 			break;
 			
 			case 7:
-				if(cekKosong(N) != 0)
-				{
+				if(cekKosong(N) != 0){
 					printf("\n\t Masukan Nomor Rekening : "); scanf("%d", &noRek);
 					printf("\n\t Masukan PIN : "); scanf("%d", &pin);
-					if(cariRekening (N, noRek) != -1)
-					{
+					if(cariRekening (N, noRek) != -1){
 						indeks = cariRekening (N, noRek);
-						if(N[indeks].PIN != pin)
-						{
+						if(N[indeks].PIN != pin){
 							printf("\n\t\t [!] No. Rekening atau Pin Salah");
-						}
-						else
-						{
-							do
-							{
+						}else{
+							do{
 								printf("\n\t\t Saldo Anda : Rp %.2lf", N[indeks].saldo);
 								printf("\n\\t\t Masukkan Nominal yang ingin anda tarik : "); scanf("%lf", &tarik);
-								if(tarik < 100000)
-								{
+								if(tarik < 100000){
 									printf("\n\t\t [!] Tidak Bisa Mengambil Uang < Rp 100.000 \n");
-								}
-								else if(tarik > N[indeks].saldo)
-								{
+								}else if(tarik > N[indeks].saldo){
 									printf("\n\t\t [!] Saldo Anda tidak mencukupi \n");
-								}
-								else
-								{
+								}else{
 									printf("\n\t\t Silakan Ambil Uang Anda ^-^");
 									N[indeks].saldo = hitungTarikSaldo (N, indeks, tarik);
 									printf("\n\t\t Sisa Saldo Anda : %.2lf", N[indeks].saldo);
@@ -473,56 +349,39 @@ int main(int argc, char *argv[]) {
 								}
 							}while(tarik < 100000 || tarik > N[indeks].saldo);	
 						}
-					}
-					else
-					{
+					}else{
 						printf("\n\t\t [!] No. Rekening atau Pin Salah");
 					}
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Kosong");
 				}
 			break;
 			
 			case 8:
-				if(cekKosong(N) != 0)
-				{
+				if(cekKosong(N) != 0){
 					printf("\n\t Masukan Nomor Rekening : "); scanf("%d", &noRek);
 					printf("\n\t Masukan PIN : "); scanf("%d", &pin);
-					if(cariRekening (N, noRek) != -1)
-					{
+					if(cariRekening (N, noRek) != -1){
 						indeks = cariRekening (N, noRek);
-						if(N[indeks].PIN != pin)
-						{
+						if(N[indeks].PIN != pin){
 							printf("\n\t\t [!] No. Rekening atau Pin Salah");
-						}
-						else
-						{
-							do
-							{
+						}else{
+							do{
 								printf("\n\t\t Saldo Anda : Rp %.2lf", N[indeks].saldo);
 								printf("\n\t\t Masukkan Nominal yang ingin Anda setor : "); scanf("%lf", &tarik);
-								if(tarik < 100000)
-								{
+								if(tarik < 100000){
 									printf("\n\t\t [!] Nominal Tidak Boleh < Rp 100.000");
-								}
-								else
-								{
+								}else{
 									N[indeks].saldo = hitungSetorSaldo (N, indeks, tarik);
 									printf("\n\t\t Saldo Rekening Anda sekarang : Rp %.2lf", N[indeks].saldo);
 									break;
 								}
 							}while(true);
 						}
-					}
-					else
-					{
+					}else{
 						printf("\n\t\t [!] No. Rekening atau Pin Salah");
 					}
-				}
-				else
-				{
+				}else{
 					printf("\n\t\t [!] Data Kosong");
 				}
 			break;
@@ -540,76 +399,60 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-void initData (Nasabah N[])
-{
+void initData (Nasabah N[]){
 	int i, j;
-	for(i=0; i<5; i++)
-	{
+	for(i=0; i<5; i++){
 		strcpy(N[i].nama, "-");
 		strcpy(N[i].telp, "-");
 		strcpy(N[i].tanggal, "-");
 		N[i].PIN = 0;
 		N[i].noRek = 0;
 		N[i].saldo = 0;
-		for(j=0; j<3; j++)
-		{
+		for(j=0; j<3; j++){
 			N[i].B[j].berat = 0;
 			strcpy(N[i].B[j].nama, "-");
 		}
 	}
 }
 
-int cekKosong (Nasabah N[])
-{
+int cekKosong (Nasabah N[]){
 	int i;
-	for(i=0; i<5; i++)
-	{
-		if(N[i].noRek == 0)
-		{
+	for(i=0; i<5; i++){
+		if(N[i].noRek == 0){
 			return i;
 		}
 	}
 	return -1;
 }
 
-int cariTelepon (Nasabah N[], string noTelp)
-{
+int cariTelepon (Nasabah N[], string noTelp){
 	int i;
-	for(i=0; i<5; i++)
-	{
-		if(strcmp(N[i].telp, noTelp) == 0)
-		{
+	for(i=0; i<5; i++){
+		if(strcmp(N[i].telp, noTelp) == 0){
 			return i;
 		}
 	}
 	return -1;
 }
 
-int cariRekening (Nasabah N[], int noRek)
-{
+int cariRekening (Nasabah N[], int noRek){
 	int i;
-	for(i=0; i<5; i++)
-	{
-		if(N[i].noRek == noRek)
-		{
+	for(i=0; i<5; i++){
+		if(N[i].noRek == noRek){
 			return i;
 		}
 	}
 	return -1;
 }
 
-int angkaRandom (int max, int min)
-{
+int angkaRandom (int max, int min){
 	return rand() % (max - min+1) + min;
 }
 
-void tampilData (Nasabah N[])
-{
+void tampilData (Nasabah N[]){
 	int i, j;
-	for(i=0; i<5; i++)
-	{
-		if(N[i].noRek != 0)
-		{
+	for(i=0; i<5; i++){
+		if(N[i].noRek != 0){
 			printf("\n\t ======================================");
 			printf("\n\t\t\t Nasabah %d", i+1);
 			printf("\n\t ======================================");
@@ -621,10 +464,8 @@ void tampilData (Nasabah N[])
 			printf("\n\t Saldo \t\t: Rp %.2lf", N[i].saldo);
 			printf("\n");
 			
-			for(j=0; j<3; j++)
-			{
-				if(N[i].B[j].berat != 0)
-				{
+			for(j=0; j<3; j++){
+				if(N[i].B[j].berat != 0){
 					printf("\n\t\t == [Barang Nasabah %d] ==", j+1);
 					printf("\n\t\t Nama \t: %s", N[i].B[j].nama);
 					printf("\n\t\t Berat \t: %.2f", N[i].B[j].berat);
@@ -634,8 +475,7 @@ void tampilData (Nasabah N[])
 	}
 }
 
-void tampilDataSearch (Nasabah N[], int indeks)
-{
+void tampilDataSearch (Nasabah N[], int indeks){
 	int j;
 	printf("\n\t ========== [Rekening Anda] ========== \n");
 	printf("\n\t Nasabah \t: %s", N[indeks].nama);
@@ -645,10 +485,8 @@ void tampilDataSearch (Nasabah N[], int indeks)
 	printf("\n\t PIN \t\t: %d", N[indeks].PIN);
 	printf("\n\t Saldo \t\t: Rp %.2lf", N[indeks].saldo);
 	
-	for(j=0; j<3; j++)
-	{
-		if(N[indeks].B[j].berat != 0)
-		{
+	for(j=0; j<3; j++){
+		if(N[indeks].B[j].berat != 0){
 			printf("\n\t\t == [Barang Nasabah %d] ==", j+1);
 			printf("\n\t\t Nama \t: %s", N[indeks].B[j].nama);
 			printf("\n\t\t Berat \t: %.2f", N[indeks].B[j].berat);
@@ -656,24 +494,18 @@ void tampilDataSearch (Nasabah N[], int indeks)
 	}
 }
 
-void hapusRekening (Nasabah N[], int indeks)
-{
+void hapusRekening (Nasabah N[], int indeks){
 	int i, j;
-	for(i=indeks; i<5; i++)
-	{
-		if(i<4)
-		{
+	for(i=indeks; i<5; i++){
+		if(i<4){
 			N[i] = N[i+1];
-		}
-		else
-		{
+		}else{
 			strcpy(N[i].nama, "-");
 			strcpy(N[i].tanggal, "-");
 			strcpy(N[i].telp, "-");
 			N[i].noRek = 0;
 			N[i].PIN = 0;
-			for(j=0; j<3; j++)
-			{
+			for(j=0; j<3; j++){
 				strcpy(N[i].B[j].nama, "-");
 				N[i].B[j].berat = 0;
 			}
@@ -681,56 +513,43 @@ void hapusRekening (Nasabah N[], int indeks)
 	}	
 }
 
-int cekKosongBarang (Nasabah N[], int indeks)
-{
+int cekKosongBarang (Nasabah N[], int indeks){
 	int i;
-	for(i=0; i<3; i++)
-	{
-		if(N[indeks].B[i].berat == 0)
-		{
+	for(i=0; i<3; i++){
+		if(N[indeks].B[i].berat == 0){
 			return i;
 		}
 	}
 	return -1;
 }
 
-int cariBarang (Nasabah N[], int indeks, string barang)
-{
+int cariBarang (Nasabah N[], int indeks, string barang){
 	int i;
-	for(i=0; i<3; i++)
-	{
-		if(strcmp(N[indeks].B[i].nama, barang) == 0)
-		{
+	for(i=0; i<3; i++){
+		if(strcmp(N[indeks].B[i].nama, barang) == 0){
 			return i;
 		}
 	}
 	return -1;
 }
 
-void hapusBarang (Nasabah N[], int indeks, int subIndeks)
-{
+void hapusBarang (Nasabah N[], int indeks, int subIndeks){
 	int i;
-	for(i=subIndeks; i<3; i++)
-	{
-		if(i<2)
-		{
+	for(i=subIndeks; i<3; i++){
+		if(i<2){
 			strcpy(N[indeks].B[i].nama, N[indeks].B[i+1].nama);
 			N[indeks].B[i].berat = N[indeks].B[i+1].berat;
-		}
-		else
-		{
+		}else{
 			strcpy(N[indeks].B[i].nama, "-");
 			N[indeks].B[i].berat = 0;
 		}
 	}	
 }
 
-double hitungTarikSaldo (Nasabah N[], int indeks, double tarik)
-{
+double hitungTarikSaldo (Nasabah N[], int indeks, double tarik){
 	return N[indeks].saldo - tarik;
 }
 
-double hitungSetorSaldo (Nasabah N[], int indeks, double tarik)
-{
+double hitungSetorSaldo (Nasabah N[], int indeks, double tarik){
 	return N[indeks].saldo + tarik;
 }
